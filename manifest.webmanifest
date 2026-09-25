@@ -1,0 +1,12 @@
+{
+  "name": "ThantFlash — Flash Card & Reminder",
+  "short_name": "ThantFlash",
+  "description": "Thant Zin's flash cards and reminders",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f4fb",
+  "theme_color": "#6d5dfc",
+  "icons": [
+    { "src": "assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

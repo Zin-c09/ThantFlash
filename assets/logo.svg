@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Thant Zin logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6d5dfc"/>
+      <stop offset="1" stop-color="#f25f8c"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="28" fill="url(#g)"/>
+  <!-- back card -->
+  <rect x="30" y="26" width="64" height="80" rx="10" fill="#ffffff" opacity=".35" transform="rotate(-10 62 66)"/>
+  <!-- front card -->
+  <rect x="34" y="24" width="64" height="80" rx="10" fill="#ffffff"/>
+  <!-- T -->
+  <path d="M44 40h24v8h-8v28h-8V48h-8z" fill="#6d5dfc"/>
+  <!-- Z -->
+  <path d="M64 58h24v7L73 82h15v8H63v-7l15-17H64z" fill="#f25f8c"/>
+  <!-- lightning spark -->
+  <path d="M92 14l-8 14h7l-4 12 11-16h-7l4-10z" fill="#ffd166" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>
