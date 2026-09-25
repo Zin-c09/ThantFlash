@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ThantFlash</title>
+  <meta name="description" content="Thant Zin's flash cards and reminders">
+  <meta name="theme-color" content="#6d5dfc">
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="Thant Zin logo" width="44" height="44">
+      <div>
+        <h1>ThantFlash</h1>
+        <p class="tagline">by Thant Zin · Flash Card &amp; Reminder</p>
+      </div>
+    </div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="study" role="tab">📚 လေ့လာရန်</button>
+      <button class="tab" data-tab="cards" role="tab">🗂️ ကတ်များ</button>
+      <button class="tab" data-tab="reminders" role="tab">⏰ သတိပေးချက်</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- STUDY -->
+    <section id="study" class="panel active">
+      <div class="row between">
+        <label>Deck
+          <select id="studyDeck"></select>
+        </label>
+        <span id="studyStats" class="muted"></span>
+      </div>
+
+      <div id="studyArea">
+        <div class="card-scene">
+          <div id="flashcard" class="flashcard" tabindex="0" aria-live="polite">
+            <div class="face front"><span id="cardFront"></span></div>
+            <div class="face back"><span id="cardBack"></span></div>
+          </div>
+        </div>
+        <p class="hint muted">ကတ်ကို နှိပ်ပြီး အဖြေကြည့်ပါ (Space)</p>
+        <div id="gradeButtons" class="grade hidden">
+          <button class="btn again" data-grade="0">😣 မသိ <small>(1)</small></button>
+          <button class="btn hard" data-grade="1">🤔 ခက် <small>(2)</small></button>
+          <button class="btn good" data-grade="2">🙂 သိ <small>(3)</small></button>
+          <button class="btn easy" data-grade="3">😎 လွယ် <small>(4)</small></button>
+        </div>
+      </div>
+      <div id="studyEmpty" class="empty hidden">
+        🎉 ဒီနေ့အတွက် ပြန်လေ့လာရမယ့် ကတ် မရှိတော့ပါ။
+        <button id="studyAll" class="btn">အကုန်ထပ်လေ့လာမယ်</button>
+      </div>
+    </section>
+
+    <!-- CARDS -->
+    <section id="cards" class="panel">
+      <form id="cardForm" class="box">
+        <h2>ကတ်အသစ်ထည့်ရန်</h2>
+        <input id="cardDeck" list="deckList" placeholder="Deck (ဥပမာ English)" required>
+        <datalist id="deckList"></datalist>
+        <textarea id="cardFrontIn" rows="2" placeholder="အရှေ့ (မေးခွန်း)" required></textarea>
+        <textarea id="cardBackIn" rows="2" placeholder="အနောက် (အဖြေ)" required></textarea>
+        <input type="hidden" id="cardId">
+        <div class="row">
+          <button class="btn primary" type="submit">သိမ်းမယ်</button>
+          <button class="btn" type="reset" id="cardCancel">ရှင်းမယ်</button>
+        </div>
+      </form>
+
+      <div class="row between">
+        <input id="cardSearch" type="search" placeholder="🔍 ရှာရန်">
+        <div class="row">
+          <button class="btn" id="exportBtn">⬇️ Export</button>
+          <label class="btn">⬆️ Import<input id="importFile" type="file" accept="application/json" hidden></label>
+        </div>
+      </div>
+      <ul id="cardList" class="list"></ul>
+    </section>
+
+    <!-- REMINDERS -->
+    <section id="reminders" class="panel">
+      <form id="reminderForm" class="box">
+        <h2>သတိပေးချက်အသစ်</h2>
+        <input id="remTitle" placeholder="ဘာကို သတိပေးရမလဲ" required>
+        <div class="row">
+          <input id="remTime" type="datetime-local" required>
+          <select id="remRepeat">
+            <option value="none">တစ်ကြိမ်</option>
+            <option value="daily">နေ့တိုင်း</option>
+            <option value="weekly">အပတ်တိုင်း</option>
+          </select>
+        </div>
+        <div class="row">
+          <button class="btn primary" type="submit">ထည့်မယ်</button>
+          <button class="btn" type="button" id="notifyBtn">🔔 Notification ခွင့်ပြုရန်</button>
+        </div>
+        <p class="muted small">App ဖွင့်ထားစဉ် သတိပေးပါမယ်။ ဖုန်းပိတ်ထားရင်တောင် လိုချင်ရင် 📅 ခလုတ်နဲ့ Google Calendar ထဲ ထည့်ပါ။</p>
+      </form>
+      <ul id="reminderList" class="list"></ul>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status"></div>
+  <footer class="muted small">© <span id="year"></span> Thant Zin · ThantFlash</footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
