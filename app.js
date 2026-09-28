@@ -100,6 +100,7 @@ function nextCard() {
   $('#studyEmpty').classList.toggle('hidden', !!current);
   if (current) {
     $('#cardFront').textContent = current.front;
+    $('#flashcard').classList.toggle('long', Math.max(current.front.length, current.back.length) > 60);
     // wait for the flip-back animation before revealing the next answer
     setTimeout(() => { $('#cardBack').textContent = current ? current.back : ''; }, 250);
   } else {
@@ -229,14 +230,28 @@ $('#exportBtn').addEventListener('click', () => {
   a.click();
   URL.revokeObjectURL(a.href);
 });
+// Tab-separated flash cards (Anki style): Front<TAB>Back<TAB>Deck, one card per line.
+// `<br>` inside a field becomes a line break; lines starting with # are comments.
+function parseTsv(text, fallbackDeck) {
+  return text.split(/\r?\n/)
+    .filter((line) => line.trim() && !line.startsWith('#'))
+    .map((line) => {
+      const [front, back, deck] = line.split('\t').map((f) => (f || '').replace(/<br\s*\/?>/gi, '\n').trim());
+      return { front, back, deck: deck || fallbackDeck };
+    });
+}
+
 $('#importFile').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
   try {
-    const data = JSON.parse(await file.text());
+    const text = await file.text();
+    const isJson = /^\s*[[{]/.test(text);
+    const data = isJson ? JSON.parse(text) : { cards: parseTsv(text, file.name.replace(/\.[^.]+$/, '')) };
     const known = new Set(cards.map((c) => c.id));
+    const seen = new Set(cards.map((c) => `${c.deck}\t${c.front}`));
     const incoming = (Array.isArray(data) ? data : data.cards || [])
-      .filter((c) => c && c.front && c.back && !known.has(c.id))
+      .filter((c) => c && c.front && c.back && !known.has(c.id) && !seen.has(`${c.deck || 'Imported'}\t${c.front}`))
       .map((c) => ({ ...newCard(c.deck || 'Imported', c.front, c.back), ...c }));
     cards.push(...incoming);
     const knownR = new Set(reminders.map((r) => r.id));
