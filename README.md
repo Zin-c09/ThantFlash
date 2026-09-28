@@ -9,9 +9,6 @@ Thant Zin ရဲ့ **Flash Card + Reminder** web app — install လုပ်�
 - 📚 **Flash Card** — ကတ်လှန်ပြီး လေ့လာ၊ *မသိ / ခက် / သိ / လွယ်* နဲ့ အမှတ်ပေး။
   Spaced repetition (SM-2 ပုံစံ) နဲ့ ပြန်လေ့လာရမယ့်နေ့ကို အလိုအလျောက် တွက်ပေးတယ်။
 - 🗂️ **Deck များ** — ကတ်တွေကို Deck အလိုက် ခွဲ၊ ပြင်၊ ဖျက်၊ ရှာ။ JSON export / import။
-  Anki ပုံစံ `.tsv` (`Front<TAB>Back<TAB>Deck`၊ စာကြောင်းခွဲရန် `<br>`) ဖိုင်လည်း import လုပ်လို့ရ။
-- 🇯🇵 **JLPT N2** — AI ကို နေ့စဉ် kanji / vocab / grammar သင်ခိုင်းပြီး ကတ်ဖိုင်ထုတ်ခိုင်းမယ့် prompt:
-  [`prompts/JLPT_N2_Tutor_Prompt.md`](prompts/JLPT_N2_Tutor_Prompt.md)
 - ⏰ **Reminder** — တစ်ကြိမ် / နေ့တိုင်း / အပတ်တိုင်း သတိပေးချက်၊ browser notification + အသံ။
   📅 ခလုတ်နဲ့ Google Calendar ထဲ ထည့်လို့ရ (app ပိတ်ထားရင်လည်း သတိပေးစေချင်ရင်)။
 - 📱 PWA — ဖုန်း Home screen ပေါ် ထည့်ပြီး offline သုံးလို့ရ။

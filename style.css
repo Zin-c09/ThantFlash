@@ -125,8 +125,6 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--primary); o
   .flashcard { height: 220px; }
   .face { font-size: 1.25rem; }
 }
-/* long cards (example sentences, grammar notes) read better smaller and left-aligned */
-.flashcard.long .face { font-size: 1rem; line-height: 1.6; text-align: left; align-items: flex-start; }
 
 .empty { text-align: center; padding: 40px 16px; display: grid; gap: 12px; justify-items: center; }
 
