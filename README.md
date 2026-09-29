@@ -26,6 +26,11 @@ Data အားလုံးကို ကိုယ့် browser ရဲ့ `localS
 | `Space` / `Enter` | ကတ်လှန် |
 | `1` `2` `3` `4` | မသိ / ခက် / သိ / လွယ် |
 
+## Backend (Java Spring Boot)
+
+[`backend/`](backend/README.md) — Spring Boot 3 REST API: JWT login၊ PostgreSQL၊
+SM-2 review API၊ study stats၊ TSV import၊ reminder scheduler၊ Docker + CI။
+
 ## Run
 
 ```bash
