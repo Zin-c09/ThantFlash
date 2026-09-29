@@ -1,0 +1,36 @@
+spring:
+  application:
+    name: thantflash-server
+  # Default: in-memory H2 (no install needed). Use profile "postgres" for a real DB.
+  datasource:
+    url: jdbc:h2:mem:thantflash;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate   # schema is owned by Flyway, Hibernate only checks it
+  h2:
+    console:
+      enabled: true        # http://localhost:8080/h2-console
+
+thantflash:
+  jwt:
+    # Change in production: set env var THANTFLASH_JWT_SECRET (at least 32 characters)
+    secret: ${THANTFLASH_JWT_SECRET:dev-only-secret-change-me-please-32chars!}
+    expires-in: 7d
+  cors:
+    allowed-origins:
+      - http://localhost:8000
+      - http://127.0.0.1:8000
+      - https://zin-c09.github.io
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
