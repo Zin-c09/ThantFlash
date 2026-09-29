@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:thantflash;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    username: sa
+    password:
+thantflash:
+  jwt:
+    secret: test-secret-test-secret-test-secret-123
+  reminders:
+    enabled: false
