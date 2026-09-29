@@ -1,0 +1,31 @@
+# docker compose up --build   →   http://localhost:8080/swagger-ui.html
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: thantflash
+      POSTGRES_USER: thantflash
+      POSTGRES_PASSWORD: thantflash
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U thantflash"]
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      DB_URL: jdbc:postgresql://db:5432/thantflash
+      DB_USERNAME: thantflash
+      DB_PASSWORD: thantflash
+      THANTFLASH_JWT_SECRET: change-this-to-a-long-random-string-in-prod
+    ports:
+      - "8080:8080"
+
+volumes:
+  db-data:

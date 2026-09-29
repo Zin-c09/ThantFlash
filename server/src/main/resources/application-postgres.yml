@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/thantflash}
+    username: ${DB_USERNAME:thantflash}
+    password: ${DB_PASSWORD:thantflash}
+  h2:
+    console:
+      enabled: false
