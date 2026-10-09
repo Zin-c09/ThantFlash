@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="my">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ThantQuake — ငလျင်သတင်း</title>
+  <meta name="description" content="Live earthquake news from USGS — map, filters and useful links.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>🌏 ThantQuake <small>ငလျင်သတင်း</small></h1>
+    <span id="source" class="badge">…</span>
+  </header>
+
+  <form id="filters" class="filters">
+    <label>ကာလ
+      <select name="period">
+        <option value="hour">၁ နာရီ</option>
+        <option value="day" selected>၁ ရက်</option>
+        <option value="week">၁ ပတ်</option>
+        <option value="month">၁ လ</option>
+      </select>
+    </label>
+    <label>Magnitude ≥
+      <select name="minmag">
+        <option value="0">အားလုံး</option>
+        <option value="2.5" selected>2.5</option>
+        <option value="4.5">4.5</option>
+        <option value="6">6.0</option>
+      </select>
+    </label>
+    <label>နေရာ ရှာ
+      <input name="q" type="search" placeholder="Myanmar, Japan, Thailand…">
+    </label>
+    <button type="submit">ပြန်ရှာ</button>
+  </form>
+
+  <section class="stats" id="stats"></section>
+  <div id="map" class="map" role="img" aria-label="Earthquake map"></div>
+
+  <main>
+    <section>
+      <h2>📰 နောက်ဆုံး ငလျင်သတင်း</h2>
+      <p id="status" class="muted">Loading…</p>
+      <ul id="list" class="list"></ul>
+    </section>
+
+    <aside>
+      <h2>🔗 အသုံးဝင် Website / API</h2>
+      <ul id="links" class="links"></ul>
+      <h2>🛟 ငလျင်လှုပ်ရင်</h2>
+      <ol class="tips">
+        <li><b>ဝပ်</b> — ကြမ်းပြင်ပေါ် ဒူးထောက်ဝပ်</li>
+        <li><b>ကာ</b> — စားပွဲအောက်ဝင်၊ ခေါင်း/လည်ပင်း ကာ</li>
+        <li><b>ကိုင်</b> — လှုပ်တာ မရပ်မချင်း ကိုင်ထား</li>
+        <li>ပင်လယ်ကမ်းနားဆိုရင် မြင့်တဲ့နေရာ ချက်ချင်းပြေး (Tsunami)</li>
+      </ol>
+    </aside>
+  </main>
+
+  <footer class="muted">Data: <a href="https://earthquake.usgs.gov/" target="_blank" rel="noopener">USGS</a> · auto-refresh 60s</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
