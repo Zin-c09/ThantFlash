@@ -16,6 +16,8 @@ Thant Zin ရဲ့ **Flash Card + Reminder** web app — install လုပ်�
   📅 ခလုတ်နဲ့ Google Calendar ထဲ ထည့်လို့ရ (app ပိတ်ထားရင်လည်း သတိပေးစေချင်ရင်)။
 - 📱 PWA — ဖုန်း Home screen ပေါ် ထည့်ပြီး offline သုံးလို့ရ။
 - 🌙 Dark mode အလိုအလျောက်။
+- ☕ **Backend API (Java / Spring Boot)** — အကောင့်၊ DB သိမ်းဆည်းမှု၊ SM-2 review၊ စာရင်းအင်း။
+  [`server/`](server/README.md) ｜ 設計書: [`server/docs/DESIGN.md`](server/docs/DESIGN.md)
 
 Data အားလုံးကို ကိုယ့် browser ရဲ့ `localStorage` ထဲမှာပဲ သိမ်းပါတယ်။
 
