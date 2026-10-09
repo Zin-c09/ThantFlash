@@ -33,10 +33,9 @@ Data အားလုံးကို ကိုယ့် browser ရဲ့ `localS
 [`backend/`](backend/README.md) — Spring Boot 3 REST API: JWT login၊ PostgreSQL၊
 SM-2 review API၊ study stats၊ TSV import၊ reminder scheduler၊ Docker + CI။
 
-## ThantQuake — ငလျင်သတင်း
+## ZinQuake — ငလျင်သတင်း
 
-[`earthquake/`](earthquake/README.md) — USGS API သုံးတဲ့ live ငလျင်သတင်း app၊
-map + filter + အသုံးဝင် link များ။ Backend ကို Python / PHP / Java ကြိုက်တာ ရွေးသုံး။
+ငလျင်သတင်း app ကို repo သီးသန့် [Zin-c09/ZinQuake](https://github.com/Zin-c09/ZinQuake) ကို ရွှေ့ထားပါတယ်။
 
 ## Run
 
