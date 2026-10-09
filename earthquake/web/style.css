@@ -88,3 +88,12 @@ aside { min-width: 0; }
 .links small { display: block; color: var(--muted); }
 .tips { padding-left: 20px; }
 footer { padding: 16px; text-align: center; font-size: .8rem; }
+.top { flex-wrap: wrap; gap: 8px; }
+.top-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.lang { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.lang button {
+  font: inherit; font-size: .8rem; padding: 4px 10px; border: 0; cursor: pointer;
+  background: var(--card); color: var(--text);
+}
+.lang button + button { border-left: 1px solid var(--line); }
+.lang button[aria-pressed="true"] { background: var(--accent); color: #fff; }

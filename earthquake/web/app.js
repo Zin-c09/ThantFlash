@@ -5,17 +5,18 @@
 const USGS_FEED = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary";
 const REFRESH_MS = 60_000;
 
+// Descriptions are I18N[lang].linkNotes in i18n.js, in this same order.
 const LINKS = [
-  { name: "USGS Latest Earthquakes", url: "https://earthquake.usgs.gov/earthquakes/map/", note: "ကမ္ဘာ့ ငလျင် live map" },
-  { name: "USGS GeoJSON Feed API", url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php", note: "ဒီ app သုံးတဲ့ free API (key မလို)" },
-  { name: "USGS FDSN Event API", url: "https://earthquake.usgs.gov/fdsnws/event/1/", note: "ရက်/နေရာ/magnitude နဲ့ query" },
-  { name: "EMSC Seismic Portal", url: "https://www.seismicportal.eu/", note: "ဥရောပ ငလျင်စင်တာ + realtime WebSocket API" },
-  { name: "GDACS", url: "https://www.gdacs.org/", note: "UN ဘေးအန္တရာယ် သတိပေးချက် (ငလျင်/ဆူနာမီ)" },
-  { name: "Myanmar DMH", url: "https://www.moezala.gov.mm/", note: "မိုးလေဝသနှင့် ဇလဗေဒ ဦးစီးဌာန" },
-  { name: "Japan JMA", url: "https://www.jma.go.jp/bosai/map.html#contents=earthquake_map", note: "ဂျပန် ငလျင် / 震度 သတင်း" },
-  { name: "Thai Meteorological Dept", url: "https://earthquake.tmd.go.th/", note: "ထိုင်း ငလျင် သတင်း" },
-  { name: "Tsunami.gov", url: "https://www.tsunami.gov/", note: "ဆူနာမီ သတိပေးချက်" },
-  { name: "ReliefWeb", url: "https://reliefweb.int/disasters", note: "ဘေးအန္တရာယ် သတင်း / အစီရင်ခံစာ" },
+  { name: "USGS Latest Earthquakes", url: "https://earthquake.usgs.gov/earthquakes/map/" },
+  { name: "USGS GeoJSON Feed API", url: "https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php" },
+  { name: "USGS FDSN Event API", url: "https://earthquake.usgs.gov/fdsnws/event/1/" },
+  { name: "EMSC Seismic Portal", url: "https://www.seismicportal.eu/" },
+  { name: "GDACS", url: "https://www.gdacs.org/" },
+  { name: "Myanmar DMH", url: "https://www.moezala.gov.mm/" },
+  { name: "Japan JMA", url: "https://www.jma.go.jp/bosai/map.html#contents=earthquake_map" },
+  { name: "Thai Meteorological Dept", url: "https://earthquake.tmd.go.th/" },
+  { name: "Tsunami.gov", url: "https://www.tsunami.gov/" },
+  { name: "ReliefWeb", url: "https://reliefweb.int/disasters" },
 ];
 
 const $ = (sel) => document.querySelector(sel);
@@ -79,11 +80,14 @@ async function fetchQuakes({ period, minmag, q }) {
 
 function timeAgo(ms) {
   const s = Math.round((Date.now() - ms) / 1000);
-  if (s < 60) return `${s} စက္ကန့်အရင်`;
-  if (s < 3600) return `${Math.round(s / 60)} မိနစ်အရင်`;
-  if (s < 86400) return `${Math.round(s / 3600)} နာရီအရင်`;
-  return `${Math.round(s / 86400)} ရက်အရင်`;
+  const ago = t("ago");
+  if (s < 60) return ago.s(s);
+  if (s < 3600) return ago.m(Math.round(s / 60));
+  if (s < 86400) return ago.h(Math.round(s / 3600));
+  return ago.d(Math.round(s / 86400));
 }
+
+const fmtTime = (ms) => new Date(ms).toLocaleString(LOCALES[lang]);
 
 function el(tag, attrs = {}, ...children) {
   const node = document.createElement(tag);
@@ -92,33 +96,36 @@ function el(tag, attrs = {}, ...children) {
   return node;
 }
 
+let lastData = null;
+
 function render(data) {
+  lastData = data;
   $("#source").textContent = `source: ${data.source}`;
   const qs = data.quakes;
   const strongest = qs.reduce((m, e) => ((e.mag ?? 0) > (m?.mag ?? -1) ? e : m), null);
 
   $("#stats").replaceChildren(
-    el("div", { className: "stat" }, el("b", { textContent: qs.length }), el("span", { textContent: "ငလျင် အရေအတွက်" })),
-    el("div", { className: "stat" }, el("b", { textContent: strongest ? strongest.mag.toFixed(1) : "–" }), el("span", { textContent: "အပြင်းဆုံး" })),
-    el("div", { className: "stat" }, el("b", { textContent: qs.filter((e) => e.tsunami).length }), el("span", { textContent: "Tsunami flag" })),
+    el("div", { className: "stat" }, el("b", { textContent: qs.length }), el("span", { textContent: t("count") })),
+    el("div", { className: "stat" }, el("b", { textContent: strongest ? strongest.mag.toFixed(1) : "–" }), el("span", { textContent: t("strongest") })),
+    el("div", { className: "stat" }, el("b", { textContent: qs.filter((e) => e.tsunami).length }), el("span", { textContent: t("tsunami") })),
   );
 
   $("#status").textContent = qs.length
-    ? `Updated ${new Date(data.generated).toLocaleTimeString()}`
-    : "ဒီ filter နဲ့ ငလျင် မတွေ့ပါ။";
+    ? `${t("updated")} ${new Date(data.generated).toLocaleTimeString(LOCALES[lang])}`
+    : t("none");
 
   $("#list").replaceChildren(...qs.slice(0, 200).map((e) => {
     const cls = magClass(e.mag ?? 0);
-    const meta = `${new Date(e.time).toLocaleString()} · ${timeAgo(e.time)} · အနက် ${e.depth?.toFixed(0)} km`
-      + (e.felt ? ` · ${e.felt} ယောက် ခံစားရ` : "");
+    const meta = `${fmtTime(e.time)} · ${timeAgo(e.time)} · ${t("depth")} ${e.depth?.toFixed(0)} km`
+      + (e.felt ? ` · ${t("felt")(e.felt)}` : "");
     const place = el("div", { className: "place" }, e.place);
     if (e.tsunami) place.append(el("span", { className: "tag", textContent: "TSUNAMI" }));
     if (e.alert) place.append(el("span", { className: "tag", textContent: `ALERT ${e.alert}` }));
-    const item = el("li", { className: "quake", title: "Map မှာကြည့်ရန် နှိပ်ပါ" },
+    const item = el("li", { className: "quake", title: t("clickMap") },
       el("div", { className: `mag ${cls}`, textContent: (e.mag ?? 0).toFixed(1) }),
       el("div", { className: "info" }, place,
         el("div", { className: "meta" }, meta, " · ",
-          el("a", { href: e.url, target: "_blank", rel: "noopener", textContent: "USGS အသေးစိတ်" }))),
+          el("a", { href: e.url, target: "_blank", rel: "noopener", textContent: t("details") }))),
     );
     item.addEventListener("click", (ev) => {
       if (ev.target.tagName !== "A" && map) map.flyTo([e.lat, e.lon], 6);
@@ -132,7 +139,7 @@ function render(data) {
       const m = e.mag ?? 0;
       L.circleMarker([e.lat, e.lon], {
         radius: Math.max(3, m * 2.2), color: magColor[magClass(m)], weight: 1, fillOpacity: 0.55,
-      }).bindPopup(`<b>M${m.toFixed(1)}</b><br>${escapeHtml(e.place)}<br>${new Date(e.time).toLocaleString()}`)
+      }).bindPopup(`<b>M${m.toFixed(1)}</b><br>${escapeHtml(e.place)}<br>${fmtTime(e.time)}`)
         .addTo(layer);
     }
   }
@@ -145,17 +152,31 @@ function escapeHtml(s) {
 async function load() {
   const f = new FormData(form);
   const opts = { period: f.get("period"), minmag: Number(f.get("minmag")), q: f.get("q") || "" };
-  $("#status").textContent = "Loading…";
+  $("#status").textContent = t("loading");
   try {
     render(await fetchQuakes(opts));
   } catch (err) {
-    $("#status").textContent = `Data ယူလို့ မရပါ: ${err.message}`;
+    $("#status").textContent = `${t("error")}: ${err.message}`;
   }
 }
 
-$("#links").replaceChildren(...LINKS.map((l) =>
-  el("li", {}, el("a", { href: l.url, target: "_blank", rel: "noopener", textContent: l.name }),
-    el("small", { textContent: l.note }))));
+function renderLinks() {
+  const notes = t("linkNotes");
+  $("#links").replaceChildren(...LINKS.map((l, i) =>
+    el("li", {}, el("a", { href: l.url, target: "_blank", rel: "noopener", textContent: l.name }),
+      el("small", { textContent: notes[i] }))));
+}
+
+for (const btn of document.querySelectorAll("[data-lang]")) {
+  btn.addEventListener("click", () => {
+    setLang(btn.dataset.lang);
+    renderLinks();
+    if (lastData) render(lastData);
+  });
+}
+
+applyStaticText();
+renderLinks();
 
 form.addEventListener("submit", (ev) => { ev.preventDefault(); load(); });
 form.addEventListener("change", load);

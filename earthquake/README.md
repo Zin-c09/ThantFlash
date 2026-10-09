@@ -7,6 +7,7 @@ Backend ကို **Python / PHP / Java** ကြိုက်တာ ရွေး�
 - 🗺️ Leaflet map ပေါ်မှာ ပြ — စာရင်းကို နှိပ်ရင် အဲ့နေရာကို zoom
 - 🔎 ကာလ (၁ နာရီ / ရက် / ပတ် / လ), Magnitude, နေရာ (ဥပမာ `Myanmar`) နဲ့ filter
 - 🔄 60 စက္ကန့်တိုင်း auto-refresh
+- 🌐 ဘာသာစကား ၃ မျိုး — **မြန်မာ / English / 日本語** (ညာဘက်အပေါ် ခလုတ်နဲ့ ပြောင်း၊ ရွေးထားတာကို မှတ်ထား)
 - 🔗 အသုံးဝင် website / API link များ (USGS, EMSC, GDACS, Myanmar DMH, JMA, TMD, Tsunami.gov…)
 - 🛟 ငလျင်လှုပ်ရင် လုပ်ရမယ့် အချက်များ
 
